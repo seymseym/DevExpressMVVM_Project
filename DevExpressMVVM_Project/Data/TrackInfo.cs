@@ -26,8 +26,14 @@ namespace DevExpressMVVM_Project.Data
         private int trackId;
         public int TrackId
         {
-            get => GetProperty(() => trackId);
-            set => SetProperty(() => trackId, value);
+            get
+            {
+                return GetProperty(() => this.trackId);
+            }
+            set
+            {
+                SetProperty(() => this.trackId, value);
+            }
         }
 
         private string name;

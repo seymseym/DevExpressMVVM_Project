@@ -21,18 +21,25 @@ namespace DevExpressMVVM_Project.ViewModels
         private void EditTrack(object trackObject)
         {
             //trackObject is a generic object, so we cast it into a TrackInfo object
+
             TrackInfo track = trackObject as TrackInfo;
+            if (track == null)
+            {
+                throw new ArgumentNullException("track", "track is null");
+            }
             var document = DocumentManagerService.CreateDocument("TrackView", TrackViewModel.Create(track));
             document.Show();
+
         }
 
         //Instantiate this ViewModel through the factory of the framework
-        public static TrackListViewModel Create()
+        public static TrackListViewModel Create(object trackObject)
         {
+            TrackInfo track = trackObject as TrackInfo;
             return ViewModelSource.Create(() => new TrackListViewModel());
         }
 
-        [ServiceProperty(SearchMode =ServiceSearchMode.PreferParents)]
+        [ServiceProperty(SearchMode = ServiceSearchMode.PreferParents)]
         protected virtual IDocumentManagerService DocumentManagerService { get { return null; } }
     }
 }

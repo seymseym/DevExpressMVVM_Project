@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DevExpressMVVM_Project.Data;
 using System;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace DevExpressMVVM_Project.ViewModels
@@ -11,13 +12,32 @@ namespace DevExpressMVVM_Project.ViewModels
     public class TrackViewModel : ViewModelBase
     {
         public ICommand ResetNameCommand { get; set; }
-        public virtual TrackInfo Track { get; set; }
+        //public ICommand SaveCommand { get; set; }
+        //public ICommand RevertCommand { get; set; }
+        private TrackInfo _track { get; set; }
+
+        public virtual int TrackId { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Composer { get; set; }
+
+        public TrackInfo Track
+        {
+            get
+            {
+                return _track;
+            }
+            set
+            {
+                _track = value;
+                RaisePropertyChanged(() => Track);
+            }
+        }
 
         protected TrackViewModel() // Protected constructor
+            
         {
             // Random Data for Test
-            Track = new TrackList()[15]; // Instantiate the property. 15th element of the list.
-            ResetNameCommand = new DelegateCommand(ResetName, CanResetName, true);
+            //Track = new TrackList()[15]; // Instantiate the property. 15th element of the list.
         }
 
         protected TrackViewModel (TrackInfo track)
@@ -28,11 +48,18 @@ namespace DevExpressMVVM_Project.ViewModels
             }
 
             Load(track);
+            ResetNameCommand = new DelegateCommand(ResetName, CanResetName, true);
         }
+
+        // In the View: Delete Binding Track.TrackId --> just TrackId, Name, Composer
+        // We've seperated data object from the UI by introducing these properties.
 
         private void Load(TrackInfo track)
         {
-            this.Track = track;
+            Track = track;
+            TrackId = track.TrackId;
+            Name = track.Name;
+            Composer = track.Composer;
         }
 
         public static TrackViewModel Create()
@@ -41,7 +68,7 @@ namespace DevExpressMVVM_Project.ViewModels
         }
         public static TrackViewModel Create(TrackInfo track)
         {
-            return ViewModelSource.Create(() => new TrackViewModel());
+            return ViewModelSource.Create(() => new TrackViewModel(track));
         }
 
         public bool CanResetName()
@@ -60,10 +87,33 @@ namespace DevExpressMVVM_Project.ViewModels
                                                 MessageIcon.Question,
                                                 MessageResult.No) == MessageResult.Yes)
                 {
-                    Track.Name = "";
+                    Name = "";
                 }
             }
-        } 
+        }
+
+        //void IEditableObject.BeginEdit()
+        //{
+            
+        //}
+
+        //void IEditableObject.EndEdit()
+        //{
+        //    if (!string.Equals(Name, track.Name))
+        //        track.Name = Name;
+        //    if (!string.Equals(Composer, track.Composer))
+        //        track.Composer = Composer;
+        //    if (TrackId != track.TrackId)
+        //        track.TrackId = TrackId;
+        //}
+
+        //void IEditableObject.CancelEdit()
+        //{
+        //    Load(this.track);
+        //}
+
+        //public void Save() { ((IEditableObject)this).EndEdit(); }
+        //public void Revert() { ((IEditableObject)this).CancelEdit(); }
 
 
         // ServiceProperty attribute on this MessageBoxService property.

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
              xmlns:ViewModels="clr-namespace:DevExpressMVVM_Project.ViewModels"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" d:DataContext="{d:DesignInstance Type={x:Type ViewModels:TrackViewModel}}"
     x:Class="DevExpressMVVM_Project.Views.TrackView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:TrackViewModel}}"
@@ -16,11 +16,13 @@
     </dxmvvm:Interaction.Behaviors>
 
     <StackPanel>
-        <Button Content="Clear"
-                Command="{Binding ResetNameCommand}"/>
-        <dxe:TextEdit Text="{Binding Track.TrackId, Mode=TwoWay}"/>
-        <dxe:TextEdit Text="{Binding Track.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <dxe:TextEdit Text="{Binding Track.Composer, Mode=TwoWay}"/>
-
+        <dxb:ToolBarControl VerticalAlignment="Stretch">
+            <dxb:BarButtonItem Content="Clear" Command="{Binding ResetNameCommand}"/>
+            <!--<dxb:BarButtonItem Content="Save" Command="{Binding SaveCommand}"/>
+            <dxb:BarButtonItem Content="Revert" Command="{Binding RevertCommand}"/>-->
+        </dxb:ToolBarControl>
+        <dxe:TextEdit Text="{Binding TrackId}"/>
+        <dxe:TextEdit Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+        <dxe:TextEdit Text="{Binding Composer}"/>
     </StackPanel>
 </UserControl>
