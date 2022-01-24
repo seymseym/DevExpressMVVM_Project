@@ -20,6 +20,30 @@ namespace DevExpressMVVM_Project.ViewModels
             ResetNameCommand = new DelegateCommand(ResetName, CanResetName, true);
         }
 
+        protected TrackViewModel (TrackInfo track)
+        {
+            if(track == null)
+            {
+                throw new ArgumentNullException("track", "track is null");
+            }
+
+            Load(track);
+        }
+
+        private void Load(TrackInfo track)
+        {
+            this.Track = track;
+        }
+
+        public static TrackViewModel Create()
+        {
+            return ViewModelSource.Create(() => new TrackViewModel());
+        }
+        public static TrackViewModel Create(TrackInfo track)
+        {
+            return ViewModelSource.Create(() => new TrackViewModel());
+        }
+
         public bool CanResetName()
         {
             // It can only be reset if there is a track object assigned to this view model
@@ -40,11 +64,6 @@ namespace DevExpressMVVM_Project.ViewModels
                 }
             }
         } 
-
-        public static TrackViewModel Create()
-        {
-            return ViewModelSource.Create(() => new TrackViewModel());
-        }
 
 
         // ServiceProperty attribute on this MessageBoxService property.
