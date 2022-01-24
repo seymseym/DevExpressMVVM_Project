@@ -6,6 +6,6 @@
     xmlns:views="clr-namespace:DevExpressMVVM_Project.Views"
     Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <views:TrackView></views:TrackView>
+        <views:TrackListView></views:TrackListView>
     </Grid>
 </dx:ThemedWindow>
