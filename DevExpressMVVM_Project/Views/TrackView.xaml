@@ -5,11 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
              xmlns:ViewModels="clr-namespace:DevExpressMVVM_Project.ViewModels"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
-             x:Class="DevExpressMVVM_Project.Views.TrackView"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    x:Class="DevExpressMVVM_Project.Views.TrackView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:TrackViewModel}}"
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService/>
+    </dxmvvm:Interaction.Behaviors>
 
     <StackPanel>
         <Button Content="Clear"

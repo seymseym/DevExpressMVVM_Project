@@ -13,7 +13,7 @@ namespace DevExpressMVVM_Project.ViewModels
         public ICommand ResetNameCommand { get; set; }
         public virtual TrackInfo Track { get; set; }
 
-        public TrackViewModel() // Protected constructor
+        protected TrackViewModel() // Protected constructor
         {
             // Random Data for Test
             Track = new TrackList()[15]; // Instantiate the property. 15th element of the list.
@@ -29,15 +29,29 @@ namespace DevExpressMVVM_Project.ViewModels
 
         public void ResetName()
         {
-            if(Track != null)
+            if (Track != null)
             {
-                Track.Name = "";
+                if (MessageBoxService.ShowMessage("Are you sure?", "Question",
+                                                MessageButton.YesNoCancel,
+                                                MessageIcon.Question,
+                                                MessageResult.No) == MessageResult.Yes)
+                {
+                    Track.Name = "";
+                }
             }
-        }
+        } 
 
         public static TrackViewModel Create()
         {
             return ViewModelSource.Create(() => new TrackViewModel());
         }
+
+
+        // ServiceProperty attribute on this MessageBoxService property.
+        // This determines how to locate any existing surface which might already be there to improve
+        // the performance of the application. In this case, we're allowing to search through the 
+        // of the ViewModel as well.
+        [ServiceProperty(SearchMode = ServiceSearchMode.PreferParents)]
+        protected virtual IMessageBoxService MessageBoxService { get { return null; } }
     }
 }
