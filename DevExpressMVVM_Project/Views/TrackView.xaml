@@ -18,7 +18,7 @@
     <StackPanel>
         <Button Content="Clear"
                 Command="{Binding ResetNameCommand}"/>
-        <dxe:TextEdit Text="{Binding Track.TracrkId, Mode=TwoWay}"/>
+        <dxe:TextEdit Text="{Binding Track.TrackId, Mode=TwoWay}"/>
         <dxe:TextEdit Text="{Binding Track.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <dxe:TextEdit Text="{Binding Track.Composer, Mode=TwoWay}"/>
 

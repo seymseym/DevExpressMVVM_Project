@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:DevExpressMVVM_Project.ViewModels"
-             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="DevExpressMVVM_Project.Views.TrackListView"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" d:DataContext="{d:DesignInstance Type=ViewModels:TrackListViewModel}" x:Class="DevExpressMVVM_Project.Views.TrackListView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:TrackListViewModel}}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -26,9 +26,14 @@
             <ColumnDefinition Width="21*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        <dxg:GridControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Tracks}" Grid.ColumnSpan="3">
+        <dxg:GridControl x:Name="grid" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Tracks}" Grid.ColumnSpan="3">
             <dxg:GridControl.View>
-                <dxg:TableView ShowTotalSummary="True" AllowEditing="False"/>
+                <dxg:TableView ShowTotalSummary="True" AllowEditing="False">
+                    <dxmvvm:Interaction.Behaviors>
+                        <dxmvvm:EventToCommand EventName="RowDoubleClick" Command="{Binding EditTrackCommand}"
+                                               CommandParameter="{Binding CurrentItem, ElementName=grid}"/>
+                    </dxmvvm:Interaction.Behaviors>
+                </dxg:TableView>
             </dxg:GridControl.View>
         </dxg:GridControl>
     </Grid>
